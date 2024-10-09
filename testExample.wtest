@@ -33,5 +33,6 @@ describe "Test Trabajo en clase" {
   
   test "libre 1" {
     assert.equals(["Misiones", "Corrientes"], libre1.puedeTrabajar())
+    assert.equals(12000, libre1.honorarios())
   }
 }

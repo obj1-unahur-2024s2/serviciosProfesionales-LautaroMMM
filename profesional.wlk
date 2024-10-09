@@ -44,8 +44,32 @@ class Empresa {
   method formadoras() = profesionales.map({ p => p.universidad() }).asSet()
   
   method masBarato() = profesionales.min({ p => p.honorarios() })
+  
+  method esDeGenteAcotada() = !profesionales.any(
+    { p => p.puedeTrabajar().size() > 3 }
+  )
 }
 
-class Solicitantes {
+class SolicitantePersona {
+  var property provincia
   
+  method puedeSerAtendidoPor(
+    unProfesional
+  ) = unProfesional.puedeTrabajar().contains(provincia)
+}
+
+class SolicitanteInstitucion {
+  var property universidades
+  
+  method puedeSerAtendidoPor(unProfesional) = universidades.contains(
+    unProfesional.universidad()
+  )
+}
+
+class SolicitanteClub {
+  var property provincias
+  
+  method puedeSerAtendidoPor(unProfesional) = provincias.any(
+    { p => unProfesional.puedeTrabajar().contains(p) }
+  )
 }
