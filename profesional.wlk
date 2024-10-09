@@ -1,6 +1,11 @@
 class Universidad {
   const property provincia
   var property honorarios
+  var donaciones = 0
+  
+  method recibirDonaciones(unImporte) {
+    donaciones += unImporte
+  }
 }
 
 class AsociadoAUniversidad {
@@ -9,6 +14,10 @@ class AsociadoAUniversidad {
   method honorarios() = universidad.honorarios()
   
   method puedeTrabajar() = [universidad.provincia()]
+  
+  method cobrar(unImporte) {
+    universidad.recibirDonaciones(unImporte * 0.5)
+  }
 }
 
 class AsociadoALitoral {
@@ -17,12 +26,20 @@ class AsociadoALitoral {
   method honorarios() = 3000
   
   method puedeTrabajar() = ["Entre Rios", "Santa Fe", "Corrientes"]
+  
+  method cobrar(unImporte) {
+    universidad.recibirDonaciones(unImporte * 0.5)
+  }
 }
 
 class Libre {
   var property puedeTrabajar
   const property universidad
   var property honorarios
+  
+  method cobrar(unImporte) {
+    universidad.recibirDonaciones(unImporte * 0.5)
+  }
 }
 
 class Empresa {
@@ -47,6 +64,10 @@ class Empresa {
   
   method esDeGenteAcotada() = !profesionales.any(
     { p => p.puedeTrabajar().size() > 3 }
+  )
+  
+  method satisfacer(unSolicitante) = profesionales.any(
+    { p => unSolicitante.puedeSerAtendidoPor(p) }
   )
 }
 
